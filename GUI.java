@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.*;
-
 import java.awt.*;
 
 public class GUI {
@@ -21,6 +19,7 @@ public class GUI {
         FrontPanel frontPanel = new FrontPanel();
 
         ActionHandler handler = new ActionHandler();
+        MouseHandler mhandler = new MouseHandler();
 
         frame = new JFrame();
         frame.setSize(PANEL_SIZE_X, PANEL_SIZE_Y);
@@ -28,6 +27,7 @@ public class GUI {
         frame.setFocusable(true);
         frame.setUndecorated(true);
         frame.setVisible(true);
+        frame.addMouseListener(mhandler);
 
         MainMenuButton = new JButton("Main Menu");
         MainMenuButton.setBounds(PANEL_SIZE_X / 2 - PANEL_SIZE_X / 15, 0, PANEL_SIZE_X / 7, PANEL_SIZE_Y / 10);

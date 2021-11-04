@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 public class ActionHandler implements ActionListener {
     GameSettingsPanel gamesettingspanel = new GameSettingsPanel();
     FrontPanel frontPanel = new FrontPanel();
-    GameFieldPanel gamefieldpanel = new GameFieldPanel();
+    GameField gamefieldpanel = new GameField();
 
     
 
