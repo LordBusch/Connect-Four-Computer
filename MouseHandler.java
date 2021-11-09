@@ -21,21 +21,31 @@ public class MouseHandler implements MouseListener {
             int distanceY = (GameField.midOfHoleY[i] - y);
             int distanceCenters = (int)(Math.sqrt((distanceX * distanceX) + (distanceY * distanceY)));
 
-            //if mouse position is in the oval/hole, draw circle
-            if (distanceCenters < (GUI.PANEL_SIZE_Y / 10) / 2) {
-                GameField.ActiveHole = i;
+            //Calculate line and split of clicked hole
+            int line = (GameField.yposholes[i] - GUI.PANEL_SIZE_Y / 8) / GameField.SpaceBetweenYpos;
+            int split = (GameField.xposholes[i] - (GUI.PANEL_SIZE_X / 2 - (GUI.PANEL_SIZE_X / 4 + GUI.PANEL_SIZE_X / 12))) / GameField.SpaceBetweenXpos;
+            line++;
+            split++;
 
+
+            //if mouse position is in the oval/hole, draw circle
+            if (distanceCenters < (GUI.PANEL_SIZE_Y / 10) / 2 && GameField.boardArray[line][split] == "emtpy") {
+  
+                //if red player is active draw red checker
                 if (GameField.playerRedActive) {
                     GameField.playerRedActive = false;
                     GameField.playerBlueActive = true;
-                    System.out.println("BLUE");
-                    GameField.drawChecker[i] = 1;
+                    GameField.boardArray[line][split] = "RED";
+                    System.out.println(GameField.boardArray[line][split]);
+                    System.out.println(line + " | " + split);
                 }
+                //if blue player is active draw blue checker
                 else {
                     GameField.playerBlueActive = false;
                     GameField.playerRedActive = true;
-                    System.out.println("RED");
-                    GameField.drawChecker[i] = 2;
+                    GameField.boardArray[line][split] = "BLUE";
+                    System.out.println(GameField.boardArray[line][split]);
+                    System.out.println(line + " " + split);
                 }
             }
         }

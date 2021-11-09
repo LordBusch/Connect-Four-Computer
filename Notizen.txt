@@ -1,2 +1,1 @@
-- Löcher anklicken mit Mouse Listener lösen (keine Buttons)
- -> Position der Maus nehmen und mit denen der Löcher vergleichen
+-- Neuer Ansatz: Zweidimensionale Arrays
