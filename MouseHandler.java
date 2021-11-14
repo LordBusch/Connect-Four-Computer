@@ -27,15 +27,15 @@ public class MouseHandler implements MouseListener {
             line++;
             split++;
 
-
             //if mouse position is in the oval/hole, draw circle
-            if (distanceCenters < (GUI.PANEL_SIZE_Y / 10) / 2 && GameField.boardArray[line][split] == "emtpy") {
+            if (distanceCenters < (GUI.PANEL_SIZE_Y / 10) / 2 && GameField.LowestChecker[split] != 1) {
   
                 //if red player is active draw red checker
                 if (GameField.playerRedActive) {
                     GameField.playerRedActive = false;
                     GameField.playerBlueActive = true;
-                    GameField.boardArray[line][split] = "RED";
+                    GameField.LowestChecker[split]--;
+                    GameField.boardArray[GameField.LowestChecker[split]][split] = "RED";
                     System.out.println(GameField.boardArray[line][split]);
                     System.out.println(line + " | " + split);
                 }
@@ -43,8 +43,9 @@ public class MouseHandler implements MouseListener {
                 else {
                     GameField.playerBlueActive = false;
                     GameField.playerRedActive = true;
-                    GameField.boardArray[line][split] = "BLUE";
-                    System.out.println(GameField.boardArray[line][split]);
+                    GameField.LowestChecker[split]--;
+                    GameField.boardArray[GameField.LowestChecker[split]][split] = "BLUE";
+                    System.out.println(GameField.boardArray[GameField.LowestChecker[split]][split]);
                     System.out.println(line + " " + split);
                 }
             }

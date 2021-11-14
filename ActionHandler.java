@@ -7,7 +7,7 @@ public class ActionHandler implements ActionListener {
     FrontPanel frontPanel = new FrontPanel();
     GameField gamefieldpanel = new GameField();
 
-    
+     
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -15,6 +15,7 @@ public class ActionHandler implements ActionListener {
             System.exit(0);
         }
         if (e.getSource() == GUI.MainMenuButton) {
+            GameField.loadArrayOnce = true;
             GUI.frame.getContentPane().removeAll();
             frontPanel.add(GUI.ExitButton);
             frontPanel.add(GUI.StartGameMenuButton);

@@ -6,14 +6,14 @@ public class GameField extends JPanel {
     private static int widthBoard = GUI.PANEL_SIZE_X / 2 + GUI.PANEL_SIZE_X / 4;
     public static int[] xposholes = new int[43];
     public static int[] yposholes = new int[43];
+    public static int[] midOfHoleX = new int[43];
+    public static int[] midOfHoleY = new int[43];
     private static int totalLines = 6;
     public static int SpaceBetweenYpos = GUI.PANEL_SIZE_Y / 8;
     public static int SpaceBetweenXpos = GUI.PANEL_SIZE_X / 10;
 
     public static int xposPickedHole;
     public static int yposPickedHole;
-    public static int[] midOfHoleX = new int[43];
-    public static int[] midOfHoleY = new int[43];
     public static int ActiveHole;
     public static int[] drawChecker = new int[43];
 
@@ -21,7 +21,8 @@ public class GameField extends JPanel {
     public static boolean playerBlueActive;
 
     public static String[][] boardArray = new String[7][8];
-    private static boolean loadArrayOnce = true;
+    public static int[] LowestChecker = new int[8];
+    public static boolean loadArrayOnce = true;
 
     GameField() {
         this.setSize(GUI.PANEL_SIZE_X, GUI.PANEL_SIZE_Y);
@@ -49,13 +50,14 @@ public class GameField extends JPanel {
         DrawBoard(g);
         DrawCheckers(g);
         DrawMarker(g);
+        Check4Connected();
 
         GUI.frame.repaint();
         wait(50);
     }
 
     public void CreateArray() {
-        for(int i = 0; i <= 6; i++) {
+        for (int i = 0; i <= 6; i++) {
             System.out.println(i + "Array");
             for (int j = 0; j <= 7; j++) {
                 if (j == 8) {
@@ -63,6 +65,11 @@ public class GameField extends JPanel {
                 }
                 boardArray[i][j] = "emtpy";
             }
+        }
+        //Create LowestChecker
+        for (int i = 0; i <= 7; i++) {
+            LowestChecker[i] = 7;
+            System.out.println(LowestChecker[i] + " " + i);
         }
     }
 
@@ -142,4 +149,46 @@ public class GameField extends JPanel {
             }
         }
     }
+
+    public void Check4Connected() {
+        String activeColor;
+        if (playerRedActive) activeColor = "RED";
+        else activeColor = "BLUE"; 
+
+        for (int i = 0; i <= 6; i++) {
+            for (int j = 0; j <= 7; j++) {
+                if (j == 8) {
+                    j = 0;
+                }
+
+                if (boardArray[i][j] == activeColor) {
+                    //Check every direction, if 4 checkers are connected
+                    for (int direction = 0; direction <= 1; direction++) {
+                        int checkedLine = i;
+                        int checkedSplit = j;
+                        int count = 0;
+
+                        if (direction == 1) checkedSplit = checkedSplit - 1;                    
+                        if (direction == 2) checkedLine = checkedLine - 1; checkedSplit = checkedSplit - 1;                    
+                        if (direction == 3) checkedLine = checkedLine - 1;                    
+                        if (direction == 4) checkedLine = checkedLine - 1; checkedSplit = checkedSplit + 1;                     
+                        if (direction == 5) checkedSplit = checkedSplit + 1;                    
+                        if (direction == 6) checkedLine = checkedLine + 1; checkedSplit = checkedSplit + 1;                    
+                        if (direction == 7) checkedLine = checkedLine + 1;                   
+                        if (direction == 8) checkedLine = checkedLine + 1; checkedSplit = checkedSplit - 1;
+
+                        if (checkedLine < 1 || checkedSplit < 1 || checkedLine > 6 || checkedSplit > 7) break;
+
+                        if (boardArray[checkedLine][checkedSplit] == activeColor) {
+                            count++;
+                        }
+                        System.out.println(count + " " + checkedLine + " | " + checkedSplit);
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+
 }

@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI {
-    public static int PANEL_SIZE_X = 1920;
-    public static int PANEL_SIZE_Y = 1080;
+    public static int PANEL_SIZE_X = 1600;
+    public static int PANEL_SIZE_Y = 900;
 
     public static JFrame frame;
     public static JButton StartGameMenuButton;
