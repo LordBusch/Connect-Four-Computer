@@ -29,6 +29,7 @@ public class ActionHandler implements ActionListener {
             GUI.frame.add(gamesettingspanel).repaint();
         }
         if (e.getSource() == GUI.startGameButton) {
+            GameField.GameActive = true;
             GUI.frame.getContentPane().removeAll();
             gamefieldpanel.add(GUI.MainMenuButton);
             GUI.frame.add(gamefieldpanel);

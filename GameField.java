@@ -19,10 +19,12 @@ public class GameField extends JPanel {
 
     public static boolean playerRedActive = true;
     public static boolean playerBlueActive;
+    public static boolean GameActive = true;
 
-    public static String[][] boardArray = new String[7][8];
+    public static String[][] boardArray = new String[9][10];
     public static int[] LowestChecker = new int[8];
     public static boolean loadArrayOnce = true;
+    public static String activeColor;
 
     GameField() {
         this.setSize(GUI.PANEL_SIZE_X, GUI.PANEL_SIZE_Y);
@@ -47,20 +49,19 @@ public class GameField extends JPanel {
             CreateArray();
             loadArrayOnce = false;
         }
+        DrawMarker(g);
         DrawBoard(g);
         DrawCheckers(g);
-        DrawMarker(g);
-        Check4Connected();
 
         GUI.frame.repaint();
-        wait(50);
+        wait(100);
     }
 
     public void CreateArray() {
-        for (int i = 0; i <= 6; i++) {
+        for (int i = 0; i <= 7; i++) {
             System.out.println(i + "Array");
-            for (int j = 0; j <= 7; j++) {
-                if (j == 8) {
+            for (int j = 0; j <= 8; j++) {
+                if (j == 9) {
                     j = 0;
                 }
                 boardArray[i][j] = "emtpy";
@@ -98,7 +99,7 @@ public class GameField extends JPanel {
     }
 
 
-
+    
     public void DrawMarker(Graphics g) {
         //Get position of mouse
         int x = MouseInfo.getPointerInfo().getLocation().x;
@@ -123,9 +124,13 @@ public class GameField extends JPanel {
         if (playerRedActive) g.setColor(Color.decode("#ff4254"));
         else g.setColor(Color.decode("#63C5DA"));
 
+        g.fillRect(GUI.PANEL_SIZE_X / 2 - ((GUI.PANEL_SIZE_X / 2 + GUI.PANEL_SIZE_X / 4) / 2) - 50, GUI.PANEL_SIZE_Y / 10 - 50, widthBoard + 100, heightBoard + 100);
         //g.fillOval(GameField.xposholes[ActiveHole], GameField.yposholes[ActiveHole], GUI.PANEL_SIZE_Y / 10, GUI.PANEL_SIZE_Y / 10);
-        g.fillRect(GameField.xposholes[ActiveHole], GUI.PANEL_SIZE_Y / 10 + GUI.PANEL_SIZE_Y / 2 + GUI.PANEL_SIZE_Y / 4, GUI.PANEL_SIZE_Y / 10, GUI.PANEL_SIZE_Y / 20);
+        g.setColor(Color.gray);
+        g.fillRect(GameField.xposholes[ActiveHole], GUI.PANEL_SIZE_Y / 10 + GUI.PANEL_SIZE_Y / 2 + GUI.PANEL_SIZE_Y / 4, GUI.PANEL_SIZE_Y / 10, 50);
+        //g.fillRect(x, y, width, height);
     }
+    
 
     public void DrawCheckers(Graphics g) {
         int Active = 0;
@@ -150,45 +155,6 @@ public class GameField extends JPanel {
         }
     }
 
-    public void Check4Connected() {
-        String activeColor;
-        if (playerRedActive) activeColor = "RED";
-        else activeColor = "BLUE"; 
 
-        for (int i = 0; i <= 6; i++) {
-            for (int j = 0; j <= 7; j++) {
-                if (j == 8) {
-                    j = 0;
-                }
-
-                if (boardArray[i][j] == activeColor) {
-                    //Check every direction, if 4 checkers are connected
-                    for (int direction = 0; direction <= 1; direction++) {
-                        int checkedLine = i;
-                        int checkedSplit = j;
-                        int count = 0;
-
-                        if (direction == 1) checkedSplit = checkedSplit - 1;                    
-                        if (direction == 2) checkedLine = checkedLine - 1; checkedSplit = checkedSplit - 1;                    
-                        if (direction == 3) checkedLine = checkedLine - 1;                    
-                        if (direction == 4) checkedLine = checkedLine - 1; checkedSplit = checkedSplit + 1;                     
-                        if (direction == 5) checkedSplit = checkedSplit + 1;                    
-                        if (direction == 6) checkedLine = checkedLine + 1; checkedSplit = checkedSplit + 1;                    
-                        if (direction == 7) checkedLine = checkedLine + 1;                   
-                        if (direction == 8) checkedLine = checkedLine + 1; checkedSplit = checkedSplit - 1;
-
-                        if (checkedLine < 1 || checkedSplit < 1 || checkedLine > 6 || checkedSplit > 7) break;
-
-                        if (boardArray[checkedLine][checkedSplit] == activeColor) {
-                            count++;
-                        }
-                        System.out.println(count + " " + checkedLine + " | " + checkedSplit);
-                        
-                    }
-                }
-                
-            }
-        }
-    }
 
 }
